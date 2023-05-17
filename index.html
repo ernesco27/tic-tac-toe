@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+    <title>TIC TAC TOE</title>
+</head>
+<body>
+    <h1>TIC-TAC-TOE</h1>
+    <div class="container">
+        <div class="player1">Player 1</div>
+        <div class="player2">Player 2</div>
+        <div class="scoreboard">
+            <span class="score1">0</span>
+            <span>:</span>
+            <span class="score2">0</span>
+        </div>
+        <div class="prompt">
+            <p>Player 1, your turn!</p>
+        </div>
+        <div class="gameboard">
+            <div class="squares">O</div>
+            <div class="squares">X</div>
+            <div class="squares">X</div>
+            <div class="squares">X</div>
+            <div class="squares">O</div>
+            <div class="squares">X</div>
+            <div class="squares">X</div>
+            <div class="squares">O</div>
+            <div class="squares">O</div>
+        </div>
+    </div>
+    <div class="profile-modal">
+        <form action="">
+            <h3>Who do we have here! 😄</h3>
+            <div class="form-group">
+                <label for="player1" >Player 1, What's Your Name?</label>
+                <input type="text" id="player1" placeholder="Ernest">
+                <br>
+                <label for="marker">Player 1, choose your marker!</label>
+                <select name="marker" id="marker">
+                    <option value="X">X</option>
+                    <option value="O">O</option>
+                </select>
+                <br>
+                <label for="player2" >Player 2, What's Your Name?</label>
+                <input type="text" name="player2" id="player2" placeholder="Frimpong">
+                <br>
+                <label for="marker">Player 2, choose your marker!</label>
+                <select name="marker" id="marker">
+                    <option value="X">X</option>
+                    <option value="O">O</option>
+                </select>
+                <br>
+                <p>let's see who scores 3 points! Have Fun!</p>
+                <button type="submit" id="submit">Let's Play!</button>
+            </div>
+        </form>
+    </div>
+    <div class="modal-back"></div>
+    <div class="game-start">
+        <button id="start-btn">Click to Start</button>
+    </div>
+    
+   
+    
+</body>
+</html>
