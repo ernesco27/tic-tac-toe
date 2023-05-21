@@ -3,11 +3,19 @@ const startModal = document.querySelector('.game-start');
 const playersInfo = document.querySelector('.profile-modal');
 const modalInfoBack = document.querySelector('.modal-back');
 const playBtn = document.querySelector('#submit');
+const prompt = document.querySelector('.prompt');
+const gameOverModal = document.querySelector('.game-over');
+const resetBtn = document.querySelector('#reset-btn');
+const player1score = document.querySelector('.score1');
+const player2score = document.querySelector('.score2');
+const roundOverModal = document.querySelector('.round-over');
+const nextBtn = document.querySelector('#next-btn');
 
 
     //const squares = document.querySelectorAll('.squares');
 let currentPlayer;
 let players = [];
+
 
 
 
@@ -31,6 +39,10 @@ playBtn.addEventListener('click', (e) => {
     boardName1.textContent = player1Name;
     boardName2.textContent = player2Name;
 
+    
+
+
+
     const firstPlayer = Player(player1Name, player1Marker);
     const secondPlayer = Player(player2Name, player2Marker);
 
@@ -38,18 +50,11 @@ playBtn.addEventListener('click', (e) => {
 
     currentPlayer = firstPlayer;  
     
-    console.log(firstPlayer);
-    console.log(player1Marker);
-    console.log(player2Marker);
-    console.log(currentPlayer);
    
     playersInfo.remove();
     modalInfoBack.remove();
     
     currentPlayer.playTurn();
-
-    console.log(player1Marker);
-    console.log(player2Marker);
 
 });
 
@@ -57,6 +62,7 @@ function Player(name, marker) {
   return {
     name: name,
     marker: marker,
+    score: 0,
     playTurn: function() {
       currentPlayer = this;
 
@@ -75,7 +81,7 @@ function Player(name, marker) {
             // Switch to the next player's turn
             switchPlayer();
           } else {
-            console.log('Invalid move. Try again.');
+            prompt.textContent = `Invalid Move. ${currentPlayer.name}, try again.`
           }
         });
       });
@@ -85,57 +91,60 @@ function Player(name, marker) {
 
 
 
-// const Player = (name, marker) =>{
-//     this.name = name;
-//     this.marker = marker;
-    
-//     const playTurn = () =>{
-//         const currentPlayer = this;
-//         const squares = document.querySelectorAll('.squares');
-      
-//         squares.forEach(square => square.addEventListener('click', () =>{
-            
-//             if(square.textContent === ''){
-//                 square.textContent = currentPlayer.marker;
-//                 console.log(`${currentPlayer.name} placed ${currentPlayer.marker}`);
-
-//                 checkGameResult();
-//                 switchPlayer();
-                
-//             }else{
-//                 console.log('Invalid Move. Try again.')
-//             }
-//         })) 
-//     }
-
-//     return {name,marker,playTurn};
-
-// };
-
-
-// function switchPlayer() {
-//   currentPlayer = (currentPlayer === players[0]) ? players[1] : players[0];
-// }
-
-
-
-    
-      
-
 
 
 function checkGameResult(){
+  const squares = document.querySelectorAll('.squares');
 
+  //defining winning combinations
+  const winningCombinations = [
+    [0, 1, 2],   //rows
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],    //columns
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],    //diagonals
+    [2, 4, 6]
+  ];
+
+  //checking each winning combination
+  for (let i = 0; i < winningCombinations.length; i++) {
+    const [a, b, c] = winningCombinations[i];
+    const squareA = squares[a];
+    const squareB = squares[b];
+    const squareC = squares[c];
+
+    if (squareA.textContent !== '' && squareA.textContent === squareB.textContent && squareB.textContent === squareC.textContent) {
+      console.log(`${currentPlayer.name} wins!`);
+      updateScore();
+      
+
+      return;
     }
 
+      // Check for a draw
+    if (isBoardFull()) {
+      console.log("It's a draw!");
+    }
+  }
+}
 
 
-
+function isBoardFull(){
+  const squares = document.querySelectorAll('.squares');
+  for (let i = 0; i < squares.length; i++) {
+    if (squares[i].textContent === '') {
+      return false;
+    }
+  }
+  return true;
+}
 
 
 
  function switchPlayer(){
-    const prompt = document.querySelector('.prompt');
+    
          if(currentPlayer === players[0]){
              currentPlayer = players[1];
               prompt.textContent = `${currentPlayer.name} your Move!`
@@ -145,14 +154,17 @@ function checkGameResult(){
          }
  }
    
-     
+function updateScore(){
+  currentPlayer.score++;
+      if(currentPlayer === players[0]){
+        player1score.textContent = currentPlayer.score;
+        roundOverModal.style.display = 'grid';
+      }else{
+        player2score.textContent = currentPlayer.score; 
+      };
 
+}
 
-
-
-    
-
-    
 
 startBtn.addEventListener('click', () =>{
     startModal.style.display = 'none';
