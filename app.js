@@ -69,7 +69,8 @@ function Player(name, marker) {
 
       // Add an event listener to each game board cell
       const squares = document.querySelectorAll('.squares');
-      squares.forEach(square => square.addEventListener('click', () =>{
+      squares.forEach(function(square){
+        square.addEventListener('click', function(){
           if (square.textContent === '') {
             // Update the cell with the player's symbol
             square.textContent = currentPlayer.marker;
@@ -82,7 +83,8 @@ function Player(name, marker) {
           } else {
             prompt.textContent = `Invalid Move. ${currentPlayer.name}, try again.`
           }
-      }));
+      })});
+    
     }
   };
 }
@@ -125,7 +127,7 @@ function checkGameResult(){
       if(isGameOver()){
         roundOverModal.style.display = 'none';
         gameOverModal.style.display = 'grid';
-        announceWinner.textContent =`${currentPlayer.name} is the winner!!`
+        announceWinner.textContent =`${currentPlayer.name} is the winner!! ❤️‍🔥`
 
      }
       
@@ -137,7 +139,7 @@ function checkGameResult(){
     if (isBoardFull()) {
       console.log("It's a draw!");
       roundOverModal.style.display = 'grid';
-      announceRnd.textContent = `it's a draw!! Let's go again.`;
+      announceRnd.textContent = `it's a draw!! Let's go again. 😐`;
       nextBtn.textContent = 'Reset';
 
     }
