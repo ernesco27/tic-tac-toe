@@ -10,16 +10,18 @@ const player1score = document.querySelector('.score1');
 const player2score = document.querySelector('.score2');
 const roundOverModal = document.querySelector('.round-over');
 const nextBtn = document.querySelector('#next-btn');
+const announceRnd = document.querySelector('.announce-rnd');
+const announceWinner = document.querySelector('.announce-winner');
 
 
-    //const squares = document.querySelectorAll('.squares');
+    
 let currentPlayer;
 let players = [];
 
 
 
 
-//retrieving player information from form
+//retrieving player information from Form
 
 playBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -27,7 +29,6 @@ playBtn.addEventListener('click', (e) => {
     const player_two = document.querySelector('#player2');
     const markerSelect1 = document.querySelector('#marker1');
     const markerSelect2 = document.querySelector('#marker2');
-
     const boardName1 = document.querySelector('.player1');
     const boardName2 = document.querySelector('.player2');
 
@@ -39,13 +40,11 @@ playBtn.addEventListener('click', (e) => {
     boardName1.textContent = player1Name;
     boardName2.textContent = player2Name;
 
-    
-
-
-
+    //both players created from the factory function
     const firstPlayer = Player(player1Name, player1Marker);
     const secondPlayer = Player(player2Name, player2Marker);
 
+    //made an array for the players
     players = [firstPlayer, secondPlayer];
 
     currentPlayer = firstPlayer;  
@@ -58,22 +57,22 @@ playBtn.addEventListener('click', (e) => {
 
 });
 
+//factory function to create the players with the game method function
+
 function Player(name, marker) {
   return {
     name: name,
     marker: marker,
     score: 0,
-    playTurn: function() {
+    playTurn: () => {
       currentPlayer = this;
 
       // Add an event listener to each game board cell
       const squares = document.querySelectorAll('.squares');
-      squares.forEach(function(square) {
-        square.addEventListener('click', function() {
+      squares.forEach(square => square.addEventListener('click', () =>{
           if (square.textContent === '') {
             // Update the cell with the player's symbol
             square.textContent = currentPlayer.marker;
-            console.log(`${currentPlayer.name} placed ${currentPlayer.marker}`);
 
             // Call a function to check for a win or a draw
             checkGameResult();
@@ -83,8 +82,7 @@ function Player(name, marker) {
           } else {
             prompt.textContent = `Invalid Move. ${currentPlayer.name}, try again.`
           }
-        });
-      });
+      }));
     }
   };
 }
@@ -116,8 +114,20 @@ function checkGameResult(){
     const squareC = squares[c];
 
     if (squareA.textContent !== '' && squareA.textContent === squareB.textContent && squareB.textContent === squareC.textContent) {
-      console.log(`${currentPlayer.name} wins!`);
+      roundOverModal.style.display = 'grid';
+      announceRnd.textContent = `${currentPlayer.name} Wins!! Let's go again.`;
+      nextBtn.textContent = 'Reset';
+
       updateScore();
+
+      //check for game over based on scores
+
+      if(isGameOver()){
+        roundOverModal.style.display = 'none';
+        gameOverModal.style.display = 'grid';
+        announceWinner.textContent =`${currentPlayer.name} is the winner!!`
+
+     }
       
 
       return;
@@ -126,9 +136,16 @@ function checkGameResult(){
       // Check for a draw
     if (isBoardFull()) {
       console.log("It's a draw!");
+      roundOverModal.style.display = 'grid';
+      announceRnd.textContent = `it's a draw!! Let's go again.`;
+      nextBtn.textContent = 'Reset';
+
     }
   }
 }
+
+
+
 
 
 function isBoardFull(){
@@ -139,6 +156,17 @@ function isBoardFull(){
     }
   }
   return true;
+}
+
+
+
+function isGameOver(){
+  if(currentPlayer.score === 5){
+    return true;
+  }else{
+    return false
+  }
+  
 }
 
 
@@ -160,11 +188,15 @@ function updateScore(){
         player1score.textContent = currentPlayer.score;
         roundOverModal.style.display = 'grid';
       }else{
-        player2score.textContent = currentPlayer.score; 
+        player2score.textContent = currentPlayer.score;
+        roundOverModal.style.display = 'grid'; 
       };
 
 }
 
+
+
+//added eventlisteners to the the various buttons
 
 startBtn.addEventListener('click', () =>{
     startModal.style.display = 'none';
@@ -174,33 +206,25 @@ startBtn.addEventListener('click', () =>{
 
 
 
+nextBtn.addEventListener('click', () =>{
+  
+  const squares = document.querySelectorAll('.squares');
+  for(let i = 0; i < squares.length; i++){
+    squares[i].textContent = '';
+  }
+  roundOverModal.style.display = 'none';
 
+});
 
+resetBtn.addEventListener('click', () =>{
+  const squares = document.querySelectorAll('.squares');
+  for(let i = 0; i < squares.length; i++){
+    squares[i].textContent = '';
+  }
+  gameOverModal.style.display = 'none';
+  player1score.textContent = 0;
+  player2score.textContent = 0;
 
-
-
-
-
-// const displayController = (() => {
-//      const playerOne_disp = document.querySelector('.player1');
-//      const playerTwo_disp = document.querySelector('.player2');
-//      const {getName} = Player(name,marker);
-
-//      playerOne_disp.textContent = firstPlayer.getName();
-//      playerTwo_disp.textContent = secondPlayer.getName();
-
-//      return {playerOne_disp, playerTwo_disp};
-
-//  })();
-
-//  displayController.playerOne_disp();
-//  displayController.playerTwo_disp();
-
-
-
-
-
-
-
+})
 
 
