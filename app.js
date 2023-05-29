@@ -145,6 +145,9 @@ function checkGameResult(){
     const squareC = squares[c];
 
     if (squareA.textContent !== '' && squareA.textContent === squareB.textContent && squareB.textContent === squareC.textContent) {
+      squareA.style.backgroundColor = '#f97316';
+      squareB.style.backgroundColor = '#f97316';
+      squareC.style.backgroundColor = '#f97316';
       roundOverModal.style.display = 'grid';
       announceRnd.textContent = `${currentPlayer.name} Wins!! Let's go again.`;
       nextBtn.textContent = 'Reset';
@@ -334,6 +337,8 @@ nextBtn.addEventListener('click', () =>{
   const squares = document.querySelectorAll('.squares');
   for(let i = 0; i < squares.length; i++){
     squares[i].textContent = '';
+    squares[i].textContent = '';
+    squares[i].style.backgroundColor = '#451a03';
   }
     roundOverModal.style.display = 'none';
     isGameWon = false;
@@ -352,6 +357,7 @@ resetBtn.addEventListener('click', () =>{
   const squares = document.querySelectorAll('.squares');
   for(let i = 0; i < squares.length; i++){
     squares[i].textContent = '';
+    squares[i].style.backgroundColor = '#451a03';
   }
   gameOverModal.style.display = 'none';
   player1score.textContent = 0;
