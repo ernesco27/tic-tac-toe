@@ -253,13 +253,13 @@ function isGameOver(){
     if(currentPlayer === players[0]){
         currentPlayer = players[1];
         setTimeout(()=>{
-          prompt.textContent = `${currentPlayer.name} your Move!`
+          prompt.textContent = `${currentPlayer.name}, your Move!`
         }, 600)
          
     }else{
         currentPlayer = players[0]; 
         setTimeout(()=>{
-          prompt.textContent = `${currentPlayer.name} your Move!`
+          prompt.textContent = `${currentPlayer.name}, your Move!`
 
         }, 600)         
        
@@ -268,7 +268,7 @@ function isGameOver(){
     if(currentPlayer.isComputer){
       setTimeout(() =>{
         computerPlay();
-      }, 600)
+      }, 1000)
       
     }
       
@@ -340,7 +340,7 @@ nextBtn.addEventListener('click', () =>{
     currentPlayer = players[0];
     prompt.textContent = '';
     setTimeout(()=>{
-          prompt.textContent = `${currentPlayer.name} your Move!`
+          prompt.textContent = `${currentPlayer.name}, your Move!`
 
         }, 600);
     
