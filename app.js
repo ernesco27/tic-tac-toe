@@ -203,6 +203,9 @@ function checkGameResultAgainstComp(){
     const squareC = squares[c];
 
     if (squareA.textContent !== '' && squareA.textContent === squareB.textContent && squareB.textContent === squareC.textContent) {
+      squareA.style.backgroundColor = '#f97316';
+      squareB.style.backgroundColor = '#f97316';
+      squareC.style.backgroundColor = '#f97316';
       roundOverModal.style.display = 'grid';
       announceRnd.textContent = `${currentPlayer.name} Wins!! Let's go again.`;
       nextBtn.textContent = 'Reset';
